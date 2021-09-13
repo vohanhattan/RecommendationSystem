@@ -8,3 +8,5 @@
 ### Hiển thị chi tiết thông tin bộ phim, diễn viên, đánh giá
 ### Công cụ sử dụng: Python, Jupyter notebook, API, Front-end:Java Script, CSS, AJAX.
 ### Thuật toán sử dụng: Content-based filtering, Cosine Similarity
+
+#Nhóm em dự kiến sẽ dùng thêm công cụ, thêm các chức năng và em sẽ cập nhật sau
