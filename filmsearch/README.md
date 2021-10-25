@@ -1,1 +1,1 @@
-Cài đặt thiết lập mongoDB
+Cài đặt thiết lập Django
