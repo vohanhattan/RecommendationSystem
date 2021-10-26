@@ -1,4 +1,4 @@
-# Tên đề tài: Xây dựng trang web tìm kiếm và gợi ý phim
+# Tên đề tài: Xây dựng trang web tìm kiếm và gợi ý phim (Hệ đại trà)
 ## Nhóm thực hiện:
 ### Võ Hà Nhật Tân - 18133047
 ### Phạm Đình Nhiên - 18133038
