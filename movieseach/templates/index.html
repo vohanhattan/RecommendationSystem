@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <title>MovieSearch</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    {% include "search.html" %}
+
+    {% if info %}
+        <h2>{{ info }}</h2>
+    {% endif %}
+
+    {% for movie in movies %}
+    <div class="row">
+        <div class="col-md-2">
+            <div class="thumbnail">
+                <img class="img-fluid rounded mb-3 mb-md-0" src="{% static movie.img_path %}" alt="">
+            </div>
+        </div>
+        <div class="col-md-7">
+            <h3>{{ movie.title }}</h3>
+            <h4>
+                {% for genre in movie.genres %}
+                    {{ genre }}
+                    {% if forloop.counter != movie.genres|length %}
+                        /
+                    {% endif %}
+                {% endfor %} - {{ movie.release_date }} - {{ movie.runtime }}' min
+                <span class="label label-warning" style="color: black;background-color #ffb700">IMDb: {{ movie.vote_average }}</span>
+            </h4>
+            <p>{{ movie.description }}</p>
+            <form action="details/" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="movie_id" value="{{movie.movie_id}}"/>
+                <button type="submit" class="btn btn-primary">More info</button>
+            </form>
+        </div>
+    </div>
+    <hr>
+    {% endfor %}
+</div>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <title>{{movie.title}}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    {% include "search.html" %}
+    <h1 style="text-align: center;">{{movie.title}}</h1>
+    <hr>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="thumbnail">
+                <img class="img-fluid" src="{% static movie.img_path %}" alt="" width="100%" height="100%">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h4><b>Title</b>: {{ movie.title }}</h4>
+            <h4><b>Genres</b>:
+                {% for genre in movie.genres %}
+                    {{ genre }}
+                    {% if forloop.counter != movie.genres|length %}
+                        /
+                    {% endif %}
+                {% endfor %}
+            </h4>
+            <h4><b>Year</b>: {{ movie.release_date }}</h4>
+            <h4><b>Running time</b>: {{ movie.runtime }}' minutes</h4>
+            <h4><b>Production country</b>:
+                {% for country in movie.production_countries %}
+                    {{ country }}
+                    {% if forloop.counter != movie.production_countries|length %}
+                        /
+                    {% endif %}
+                {% endfor %}
+            </h4>
+            <h4><b>Spoken language</b>: {{movie.spoken_languages}}</h4>
+            <h4><b>Production company</b>:
+                {% for company in movie.production_companies %}
+                    {{ company }}
+                    {% if forloop.counter != movie.production_companies|length %}
+                        /
+                    {% endif %}
+                {% endfor %}
+            </h4>
+            <h4><b>Budget</b>: {{ movie.budget }}</h4>
+            <h4><b>Revenue</b>: {{ movie.revenue }}</h4>
+            <h4><b>Average vote</b>:
+                <span class="label label-warning" style="color: black;background-color #ffb700">IMDb: {{ movie.vote_average }}</span>
+                <span class="label label-info">Votes: {{ movie.vote_count }}</span>
+            </h4>
+        </div>
+    </div>
+    <hr>
+    <div class="col-md-9">
+        <p style="font-size:16px;"><b>Overview</b>: {{ movie.description }}<br><br>
+        <b>Director</b>: {{ movie.director_name }}.
+        <b> Main actors</b>:
+        {% for actor in movie.actors %}
+            {{ actor }}
+            {% if forloop.counter != movie.actors|length %}
+                ,
+            {% endif %}
+        {% endfor %}.
+        </p>
+    </div>
+    <hr>
+</div>
+
+<div class="container">
+    <hr>
+    <h2 style="text-align: center;">Similar movies</h2>
+    <hr>
+    {% for movie in similar_movies %}
+    <div class="row">
+        <div class="col-md-2">
+            <div class="thumbnail">
+                <img class="img-fluid rounded mb-3 mb-md-0" src="{% static movie.img_path %}" alt="">
+            </div>
+        </div>
+        <div class="col-md-7">
+            <h3>{{ movie.title }}</h3>
+            <h4>
+                {% for genre in movie.genres %}
+                    {{ genre }}
+                    {% if forloop.counter != movie.genres|length %}
+                        /
+                {% endif %}
+                {% endfor %} - {{ movie.release_date }} - {{ movie.runtime }}' min
+                <span class="label label-warning" style="color: black;background-color #ffb700">IMDb: {{ movie.vote_average }}</span>
+            </h4>
+            <p>{{ movie.description }}</p>
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="movie_id" value="{{movie.movie_id}}"/>
+                <button type="submit" class="btn btn-primary">More info</button>
+            </form>
+        </div>
+    </div>
+    <hr>
+    {% endfor %}
+</div>
+
+<div class="container">
+    {% if reviews|length > 0 %}
+        <h2 style="text-align: center;">Reviews</h2>
+    {% endif %}
+    <hr>
+    {% for review in reviews %}
+        <b>"</b>{{review.review}}<b>"</b>
+    {% if review.label == "pos" %}
+        <i class="material-icons" style="color:green">sentiment_very_satisfied</i>
+    {% else %}
+        <i class="material-icons" style="color:red">sentiment_very_dissatisfied</i>
+    {% endif %}
+    <hr>
+    {% endfor %}
+</div>
+
+</body>
+</html>
