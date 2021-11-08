@@ -7,4 +7,4 @@
 ### Gợi ý các phim phù hợp với phim đã tìm
 ### Hiển thị chi tiết thông tin bộ phim, diễn viên, đánh giá
 ### Công cụ sử dụng: Python, Jupyter notebook, Front-end: HTML.
-### Thuật toán sử dụng: Content-based filtering, Cosine Similarity, Knn, thuật toán tìm kiếm Okapi-BM25
+### Thuật toán sử dụng: Content-based filtering, Matrix Similarity, Knn, thuật toán tìm kiếm Okapi-BM25
