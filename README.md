@@ -8,3 +8,6 @@
 ### Show detailed movie information, actors, reviews
 ### Tools used: Python, Jupyter notebook, Front-end: HTML.
 ### Algorithm to use: Content-based filtering, Matrix Similarity, Knn, search algorithm Okapi-BM25
+
+# How to install system
+- Download File poster.zip in Backup 
