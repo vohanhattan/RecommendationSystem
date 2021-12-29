@@ -10,13 +10,16 @@
 ### Algorithm to use: Content-based filtering, Matrix Similarity, Knn, search algorithm Okapi-BM25
 
 # How to install system
+## Prepare:
 - Clone this project
-- Download File poster.zip in https://github.com/vohanhattan/RecommendationSystem/tree/main/backup and extract to https://github.com/vohanhattan/RecommendationSystem/tree/main/movieseach/static
+- Download File Posters in https://github.com/vohanhattan/RecommendationSystem/tree/main/backup and extract to ./movieseach/static
 - Download File nlkt_data in https://github.com/vohanhattan/RecommendationSystem/tree/main/backup extract to C:\ or D:\
-- Download Review in https://github.com/vohanhattan/RecommendationSystem/tree/main/backup extract to https://github.com/vohanhattan/RecommendationSystem/tree/main/movieseach/utils/aclImdb
-- You should upload_movies and upload_reviews
-- You can upload one movie, delete, edit with the corresponding file python
+- Download Review file aclImdb in https://github.com/vohanhattan/RecommendationSystem/tree/main/backup extract to ./movieseach/utils/
 - Extract file movie csv in /utils/movies
-- pip install -r requirement
+- You need to install the necessary libraries [pip install -r requirement]
+- You should upload_movies and upload_reviews (run file python in ./moviesearch/utils)
+- You can upload movie, delete, edit by run file menu.py in ./moviesearch/utils base on add_movie.csv
+
+## Run Project:
 - Run server: python main.py runserver
 - http://localhost:8000/
