@@ -54,8 +54,8 @@ def add_is_valid(myDF):
 
 if __name__ == '__main__':
     
-    cleanDF = pd.read_csv("movies/cleaned_data.csv", encoding="utf-8")
-    myDF = pd.read_csv("movies/add_movie.csv",encoding="utf-8")
+    cleanDF = pd.read_csv("movies/cleaned_data.csv", encoding="ISO-8859-1")
+    myDF = pd.read_csv("movies/add_movie.csv",encoding="ISO-8859-1")
     totalDF= cleanDF.append(myDF,ignore_index=True)
     for i, (index, row) in enumerate(myDF.iterrows()):
         if pd.isna(row["keywords"]) or pd.isna(row["genres"]) or pd.isna(row["id"]) or pd.isna(row["genres"]) or pd.isna(row["overview"]) or pd.isna(row["title"]) or pd.isna(row["production_countries"]) or pd.isna(row["production_companies"]) or pd.isna(row["actor_1_name"]) or pd.isna(row["actor_2_name"]) or pd.isna(row["actor_3_name"]) or pd.isna(row["runtime"]) or pd.isna(row["director_name"]) or pd.isna(row["imdb_id"]) or pd.isna(row["budget"]) or pd.isna(row["release_date"]) or pd.isna(row["spoken_languages"]) or pd.isna(row["vote_average"]) or pd.isna(row["vote_count"]) or pd.isna(row["popularity"]) or pd.isna(row["revenue"]):
@@ -97,7 +97,7 @@ if __name__ == '__main__':
             
 
             
-            similar_movies = find_similars(totalDF, i, n_neighbors, n_recommendations, verbose=False)
+            similar_movies = find_similars(totalDF, i+4807, n_neighbors, n_recommendations, verbose=False)
 
             movie = {"movie_id": movie_idx,
                     "title": row["title"],

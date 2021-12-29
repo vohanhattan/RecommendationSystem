@@ -7,7 +7,7 @@ import sys
 
 def check_null_value(myDF):
     for i, (index, row) in enumerate(myDF.iterrows()):
-        if pd.isna(row["genres"]) or pd.isna(row["keywords"]) or pd.isna(row["id"]) or pd.isna(row["genres"]) or pd.isna(row["overview"]) or pd.isna(row["title"]) or pd.isna(row["production_countries"]) or pd.isna(row["production_companies"]) or pd.isna(row["actor_1_name"]) or pd.isna(row["actor_2_name"]) or pd.isna(row["actor_3_name"]) or pd.isna(row["runtime"]) or pd.isna(row["director_name"]) or pd.isna(row["imdb_id"]) or pd.isna(row["budget"]) or pd.isna(row["release_date"]) or pd.isna(row["spoken_languages"]) or pd.isna(row["vote_average"]) or pd.isna(row["vote_count"]) or pd.isna(row["popularity"]) or pd.isna(row["revenue"]):
+        if pd.isna(row["keywords"]) or pd.isna(row["genres"]) or pd.isna(row["id"]) or pd.isna(row["genres"]) or pd.isna(row["overview"]) or pd.isna(row["title"]) or pd.isna(row["production_countries"]) or pd.isna(row["production_companies"]) or pd.isna(row["actor_1_name"]) or pd.isna(row["actor_2_name"]) or pd.isna(row["actor_3_name"]) or pd.isna(row["runtime"]) or pd.isna(row["director_name"]) or pd.isna(row["imdb_id"]) or pd.isna(row["budget"]) or pd.isna(row["release_date"]) or pd.isna(row["spoken_languages"]) or pd.isna(row["vote_average"]) or pd.isna(row["vote_count"]) or pd.isna(row["popularity"]) or pd.isna(row["revenue"]):
             print("The data in the CSV file cannot be empty, Please check the CSV file and try again!")
             return False
         if not isinstance(row["id"],int):
@@ -18,33 +18,16 @@ def check_null_value(myDF):
 def add_is_valid(myDF):
     client = MongoClient('localhost', 27017)  
     db = client.movie_search  
-    movies_db = db.movies_data  # getting a collection
-    list_imdb_id=[]
-    list_title=[]
+    movies_db = db.movies_data  # getting a collection  
     list_id=[]
-    find_imdb_id_db=movies_db.find({'imdb_id':myDF["imdb_id"]})
-    for imdb_id in find_imdb_id_db:
-        list_imdb_id.append(imdb_id['imdb_id'])
-
-    find_title_db=movies_db.find({'title':myDF["title"]})
-    for title in find_title_db:
-        list_title.append(title['title'])
-
     find_id=movies_db.find({'movie_id':myDF["id"]})
     for id_movies in find_id:
         list_id.append(id_movies['movie_id'])
 
     if(len(list_id)):
-        print("The id of the movie",list_id, "is duplicate, try again!")
-        return False
-    if(len(list_title)):
-        print("The title of the movie",list_title, "is duplicate, try again!")
-        return False
-    if(len(list_imdb_id)):
-        print("The imdb id of the movie",list_imdb_id, "is duplicate, try again!")
-        return False
-   
-    return True
+        return True
+    print("The id movie",myDF["id"] ,":", myDF["title"] ,"doesn't exist in database, try again!")
+    return False
 
 def check_input_in_csv(myInput, myDF):
     for i, (index, row) in enumerate(myDF.iterrows()):
@@ -84,14 +67,13 @@ if __name__ == '__main__':
     n_recommendations = 15
     if(check_null_value(myDF)==False):
         sys.exit()
-    print('Enter movie_id to add one:')
+    print('Enter movie_id to update one:')
     userInput = input()
     try:
         myInput = int(userInput)
         if(check_input_in_csv(myInput,myDF)):
             for i, (index, row) in enumerate(myDF.iterrows()):
                 if(myInput==row["id"]):
-                    id_entry=i
                     myDF=myDF.iloc[i]
                     break
             
@@ -127,11 +109,11 @@ if __name__ == '__main__':
         if pd.isna(myDF["director_name"]):
             director_name = None
             
+
         for i, (index, row) in enumerate(totalDF.iterrows()):
                 if(myInput==row["id"]):
                     id_entry=i
                     break
-        
         similar_movies = find_similars(totalDF, id_entry, n_neighbors, n_recommendations, verbose=False)
 
         movie = {"movie_id": movie_idx,
@@ -153,7 +135,8 @@ if __name__ == '__main__':
                 "actors": actors,
                 "similar_movies": similar_movies
                 }
-
+        movies_db.delete_one({"movie_id":myInput})
+        word_movies.update({},{'$pull':{"movies":myInput}},multi=True,upsert=False)
         movies_db.insert_one(movie)
 #Tạo các Keyword từ phần mô tả, tên tiêu đề, diễn viên, đạo diễn, nhà sản xuất
         fill_reverse_index(preprocess_text(description), movie_idx)
@@ -167,7 +150,7 @@ if __name__ == '__main__':
         print(i, myDF["title"])
         print("Add one movie by movie_id ==> [SUCCESS]")
     else:
-        print("movie_id already exists in the database cannot be added, try again later ==> [FAIL]")
+        sys.exit()
     # print(type(myDF["id"]))
     print("Inserted",count_movie_valid,"movies")
 
@@ -177,6 +160,3 @@ if __name__ == '__main__':
         word_movies.update_one({"word": key},{'$addToSet':{"movies":{'$each':list(dict.fromkeys(item))}}},upsert=True)
     print("Reverse index contains {} words".format(len(reverse_index.keys())))
     print("Reverse contains {} words".format(reverse_index))
-    
-
-    
