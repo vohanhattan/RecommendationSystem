@@ -16,7 +16,7 @@
 - Download File nlkt_data in https://github.com/vohanhattan/RecommendationSystem/tree/main/backup extract to C:\ or D:\
 - Download Review file aclImdb in https://github.com/vohanhattan/RecommendationSystem/tree/main/backup extract to ./movieseach/utils/
 - Extract file movie csv in /utils/movies
-- You need to install the necessary libraries [pip install -r requirement]
+- You need to install the necessary libraries `pip install -r requirement`
 - You should upload_movies and upload_reviews (run file python in ./moviesearch/utils)
 - You can upload movie, delete, edit by run file menu.py in ./moviesearch/utils base on add_movie.csv
 
