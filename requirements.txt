@@ -1,0 +1,8 @@
+pymongo
+pandas
+django
+rank_bm25
+numpy
+nltk
+sklearn
+fuzzywuzzy
