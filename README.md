@@ -10,6 +10,11 @@
 ### Algorithm to use: Content-based filtering, Matrix Similarity, Knn, search algorithm Okapi-BM25
 
 # How to install system
+##You are required to install these tools:
+- MongoDB ver:1.29.6
+- Python ver:3.8
+- Python Library in requirement.txt
+- If you want to see our recommendation algorithm simulation install anaconda Jupyter notebook
 ## Prepare:
 - Clone this project
 - Download File Posters in https://github.com/vohanhattan/RecommendationSystem/tree/main/backup and extract to ./movieseach/static
@@ -23,3 +28,5 @@
 ## Run Project:
 - Run server: python main.py runserver
 - http://localhost:8000/
+
+
