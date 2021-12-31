@@ -10,7 +10,7 @@
 ### Algorithm to use: Content-based filtering, Matrix Similarity, Knn, search algorithm Okapi-BM25
 
 # How to install system
-##You are required to install these tools:
+## You are required to install these tools:
 - MongoDB ver:1.29.6
 - Python ver:3.8
 - Python Library in requirement.txt
